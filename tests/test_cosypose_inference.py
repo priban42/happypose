@@ -81,7 +81,7 @@ class TestCosyPoseInference(unittest.TestCase):
         n_workers=1,
         device="cpu",
     ):
-        """Load coarse and refiner for the crackers example renderer."""
+        """Load coarse and refiner for the 02_cracker_box example renderer."""
         object_dataset = BOPObjectDataset(
             Path(__file__).parent / "data" / "crackers_example" / "models",
             label_format="ycbv-{label}",

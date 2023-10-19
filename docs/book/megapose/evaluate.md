@@ -79,7 +79,7 @@ conda activate happypose
 
 cd happypose
 # python -m happypose.pose_estimators.megapose.src.megapose.scripts.run_inference_on_example barbecue-sauce --run-inference --vis-outputs
-python -m happypose.pose_estimators.cosypose.cosypose.scripts.run_inference_on_example crackers --run-inference
+python -m happypose.pose_estimators.cosypose.cosypose.scripts.run_inference_on_example 02_cracker_box --run-inference
 ```
 
 ```bash

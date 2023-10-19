@@ -28,7 +28,7 @@ tar xf examples.tar.xz
 ## 4. Run the script
 
 ```sh
-python -m happypose.pose_estimators.cosypose.cosypose.scripts.run_inference_on_example crackers --run-inference
+python -m happypose.pose_estimators.cosypose.cosypose.scripts.run_inference_on_example 02_cracker_box --run-inference
 ```
 
 ## 5. Results
