@@ -28,7 +28,12 @@ import happypose
 
 PROJECT_ROOT = Path(happypose.__file__).parent.parent
 PROJECT_DIR = PROJECT_ROOT
-LOCAL_DATA_DIR = Path(os.environ.get("HAPPYPOSE_DATA_DIR", Path(PROJECT_DIR) / "local_data"))
+# LOCAL_DATA_DIR = Path(os.environ.get("HAPPYPOSE_DATA_DIR", Path(PROJECT_DIR) / "local_data"))
+
+if os.environ.get("HAPPYPOSE_DATA_DIR") is None:
+    LOCAL_DATA_DIR = Path("/media/vojta/Data/HappyPose_Data")
+else:
+    LOCAL_DATA_DIR = Path("HAPPYPOSE_DATA_DIR")
 BOP_DS_DIR = LOCAL_DATA_DIR / "bop_datasets"
 NB_DATA_DIR = LOCAL_DATA_DIR / "notebook_data"
 SHAPENET_DIR = LOCAL_DATA_DIR / "shapenetcorev2"
