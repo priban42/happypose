@@ -233,3 +233,7 @@ class ObservationTensor:
         # img_tensor is [C,H,W] where C=3 (rgb) or C=4 (rgbd)
         K_tensor = torch.as_tensor(K).float()
         return ObservationTensor(img_tensor, K_tensor)
+
+    def __del__(self):
+        del self.images
+        del self.K
