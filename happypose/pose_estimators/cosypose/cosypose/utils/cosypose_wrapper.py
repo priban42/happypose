@@ -189,4 +189,7 @@ class CosyPoseWrapper:
                 n_coarse_iterations=0, n_refiner_iterations=4)
         # print("inference successfully.")
         # result: this_batch_detections, final_preds
-        return final_preds.cpu()
+        ret = final_preds.cpu()
+        del final_preds
+        del all_preds
+        return ret

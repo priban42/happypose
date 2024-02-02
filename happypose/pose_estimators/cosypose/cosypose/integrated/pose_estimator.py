@@ -107,7 +107,7 @@ class PoseEstimator(PoseEstimationModule):
                                                         boxes_crop=iter_outputs['boxes_crop'])
                 preds[f'iteration={n}'].append(batch_preds)
 
-        logger.debug(f'Pose prediction on {len(obj_data)} detections (n_iterations={n_iterations}): {timer.stop()}')
+        # logger.debug(f'Pose prediction on {len(obj_data)} detections (n_iterations={n_iterations}): {timer.stop()}')
         preds = dict(preds)
         for k, v in preds.items():
             preds[k] = tc.concatenate(v)
@@ -441,8 +441,8 @@ class PoseEstimator(PoseEstimationModule):
             "time": elapsed,
         }
 
-        logger.debug(
-            f"Pose prediction on {B} poses (n_iterations={n_iterations}):" f" {timer.stop()}"
-        )
+        # logger.debug(
+        #     f"Pose prediction on {B} poses (n_iterations={n_iterations}):" f" {timer.stop()}"
+        # )
 
         return preds, extra_data

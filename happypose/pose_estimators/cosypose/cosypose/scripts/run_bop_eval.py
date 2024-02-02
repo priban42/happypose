@@ -11,7 +11,8 @@ SISO_SCRIPT_PATH = BOP_TOOLKIT_DIR / 'scripts/eval_siso.py'
 VIVO_SCRIPT_PATH = BOP_TOOLKIT_DIR / 'scripts/eval_vivo.py'
 
 sys.path.append(BOP_TOOLKIT_DIR.as_posix())
-from bop_toolkit_lib import inout  # noqa
+# from bop_toolkit_lib import inout  # noqa
+from deps.bop_toolkit_challenge.bop_toolkit_lib import inout  # noqa
 
 
 def main():

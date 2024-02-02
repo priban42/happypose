@@ -218,7 +218,8 @@ def main():
 
 
 def run_rclone(cmd, args, flags):
-    rclone_cmd = ["rclone", cmd] + args + flags + ["--config", str(RCLONE_CFG_PATH)]
+    # rclone_cmd = ["rclone", cmd] + args + flags + ["--config", str(RCLONE_CFG_PATH)]
+    rclone_cmd = ["rclone", cmd] + args + flags + ["--config", str("/home/vojta/happypose/happypose/pose_estimators/megapose/rclone.conf")]
     logger.debug(" ".join(rclone_cmd))
     subprocess.run(rclone_cmd)
 
@@ -228,6 +229,7 @@ def gdrive_download(gdrive_path, local_path):
     if gdrive_path.name != local_path.name:
         local_path = local_path / gdrive_path.name
     rclone_path = RCLONE_ROOT + str(gdrive_path)
+    rclone_path = 'cosypose:' + str(gdrive_path)
     local_path = str(local_path)
     logger.info(f"Copying {rclone_path} to {local_path}")
     run_rclone("copyto", [rclone_path, local_path], flags=["-P"])
