@@ -4,6 +4,7 @@ from typing import Any, Optional, Tuple
 
 import cosypose.utils.tensor_collection as tc
 import numpy as np
+import pandas
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 
@@ -171,6 +172,15 @@ class PoseEstimator(PoseEstimationModule):
             assert n_coarse_iterations > 0
             K = observation.K
             data_TCO_init = self.make_TCO_init(detections, K)
+            ####  added by probavoj
+            if data_TCO_init.poses.shape[0] == 0:
+                timer.stop()
+                timing_str = f"total={timer.elapsed():.2f}, {timing_str}"
+                extra_data = dict()
+                extra_data["timing_str"] = timing_str
+                extra_data["time"] = timer.elapsed()
+                return PandasTensorCollection(pandas.DataFrame(data={"label":pandas.Series([])}), poses=torch.tensor(())), extra_data
+            ####
             coarse_preds, coarse_extra_data = self.forward_coarse_model(observation, data_TCO_init,
                                                           n_iterations=n_coarse_iterations)
             for n in range(1, n_coarse_iterations + 1):
@@ -366,7 +376,6 @@ class PoseEstimator(PoseEstimationModule):
         timer.start()
 
         start_time = time.time()
-
         B = data_TCO_input.poses.shape[0]
         ids = torch.arange(B)
         ds = TensorDataset(ids)

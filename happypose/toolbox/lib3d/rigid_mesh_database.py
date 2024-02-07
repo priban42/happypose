@@ -61,17 +61,7 @@ class MeshDataBase:
         self.obj_dict = {obj.label: obj for obj in obj_list}
         self.obj_list = obj_list
         self.infos = {obj.label: dict() for obj in obj_list}
-        self.meshes = {
-            l: as_mesh(
-                trimesh.load(
-                    obj.mesh_path,
-                    group_material=False,
-                    process=False,
-                    skip_materials=True,
-                    maintain_order=True,
-                )
-            )
-            for l, obj in self.obj_dict.items()
+        self.meshes = {l: as_mesh(trimesh.load(obj.mesh_path,group_material=False,process=False,skip_materials=True,maintain_order=True))for l, obj in self.obj_dict.items()
         }
 
         for label, obj in self.obj_dict.items():

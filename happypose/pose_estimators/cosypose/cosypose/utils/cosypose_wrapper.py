@@ -98,7 +98,7 @@ class CosyPoseWrapper:
         return model
 
     @staticmethod
-    def load_pose_models(coarse_run_id, refiner_run_id, n_workers):
+    def load_pose_models(coarse_run_id, refiner_run_id, n_workers, dataset_name="ycbv"):
         run_dir = EXP_DIR / coarse_run_id
 
         # cfg = yaml.load((run_dir / 'config.yaml').read_text(), Loader=yaml.FullLoader)
@@ -110,7 +110,8 @@ class CosyPoseWrapper:
         #renderer = BulletBatchRenderer(object_set=cfg.urdf_ds_name, n_workers=n_workers, gpu_renderer=gpu_renderer)
         #
         
-        object_dataset = make_object_dataset("ycbv")
+        # object_dataset = make_object_dataset("ycbv")
+        object_dataset = make_object_dataset(dataset_name)
         mesh_db = MeshDataBase.from_object_ds(object_dataset)
         renderer = Panda3dBatchRenderer(object_dataset, n_workers=n_workers, preload_cache=False)
         mesh_db_batched = mesh_db.batched().to(device)
@@ -156,12 +157,19 @@ class CosyPoseWrapper:
             detector_run_id = 'detector-bop-ycbv-pbr--970850'
             coarse_run_id = 'coarse-bop-ycbv-pbr--724183'
             refiner_run_id = 'refiner-bop-ycbv-pbr--604090'
+        elif dataset_name == 'hope':
+            # HOPE setup
+            # python -m happypose.pose_estimators.megapose.scripts.download --model=detector-bop-hope-pbr--15246
+            # python -m happypose.pose_estimators.megapose.scripts.download --model=coarse-bop-hope-pbr--225203
+            # python -m happypose.pose_estimators.megapose.scripts.download --model=refiner-bop-hope-pbr--955392
+            detector_run_id = 'detector-bop-hope-pbr--15246'
+            coarse_run_id = 'coarse-bop-hope-pbr--225203'
+            refiner_run_id = 'refiner-bop-hope-pbr--955392'
         else:
             raise ValueError(f"Not prepared for {dataset_name} dataset")
         detector = CosyPoseWrapper.load_detector(detector_run_id, dataset_name)
         coarse_model, refiner_model , mesh_db = CosyPoseWrapper.load_pose_models(
-            coarse_run_id=coarse_run_id, refiner_run_id=refiner_run_id, n_workers=n_workers
-        )
+            coarse_run_id=coarse_run_id, refiner_run_id=refiner_run_id, n_workers=n_workers, dataset_name=dataset_name)
 
         pose_estimator = PoseEstimator(
             refiner_model=refiner_model,
