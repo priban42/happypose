@@ -178,7 +178,7 @@ class CosyPoseWrapper:
         )
         return detector, pose_estimator
 
-    def inference(self, observation, coarse_guess=None):
+    def inference(self, observation, coarse_guess=None, output_masks = False):
         detections = None
         run_detector = True
         if coarse_guess is None:
@@ -187,7 +187,7 @@ class CosyPoseWrapper:
                 detections=detections,
                 run_detector=run_detector,
                 data_TCO_init=None,
-                n_coarse_iterations=1, n_refiner_iterations=4)
+                n_coarse_iterations=1, n_refiner_iterations=4, output_masks=output_masks)
         else:
             final_preds, all_preds = self.pose_predictor.run_inference_pipeline(
                 observation,
@@ -198,6 +198,4 @@ class CosyPoseWrapper:
         # print("inference successfully.")
         # result: this_batch_detections, final_preds
         ret = final_preds.cpu()
-        del final_preds
-        del all_preds
-        return ret
+        return ret, all_preds
