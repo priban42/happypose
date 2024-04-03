@@ -81,10 +81,11 @@ class App(ShowBase):
             "audio-library-name null\n"
             "model-cache-dir\n",
         )
+        self.force_cpu = True  # added pribavoj
         if "GITHUB_ACTIONS" in os.environ:
             p3d.core.load_prc_file_data(f"{__file__}_2", "gl-version 3 2\n")
 
-        if torch.cuda.is_available():
+        if torch.cuda.is_available() and not self.force_cpu:
             assert "CUDA_VISIBLE_DEVICES" in os.environ
             devices = os.environ["CUDA_VISIBLE_DEVICES"].split(",")
             assert len(devices) == 1
@@ -99,6 +100,8 @@ class App(ShowBase):
                 assert minor_number_el is not None
                 dev_id = minor_number_el.text
                 os.environ["EGL_VISIBLE_DEVICES"] = str(dev_id)
+        else:
+            os.environ["EGL_VISIBLE_DEVICES"] = ''
 
         super().__init__(windowType="offscreen")
         self.render.set_shader_auto()

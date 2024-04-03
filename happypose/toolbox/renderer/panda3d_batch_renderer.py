@@ -162,6 +162,8 @@ class Panda3dBatchRenderer:
         split_objects: bool = False,
     ):
 
+
+        # self.force_cpu_render = True  # added by pribavoj
         assert n_workers >= 1
         self._object_dataset = object_dataset
         self._n_workers = n_workers

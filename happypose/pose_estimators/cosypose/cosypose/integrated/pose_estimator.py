@@ -408,7 +408,7 @@ class PoseEstimator(PoseEstimationModule):
             K_ = observation.K[batch_im_ids_]
             if torch.cuda.is_available():
                 timer_ = CudaTimer(enabled=cuda_timer)
-            else: 
+            else:
                 timer_ = SimpleTimer()
             timer_.start()
             outputs_ = self.refiner_model(
