@@ -17,9 +17,9 @@ PROJECT_DIR = PROJECT_ROOT
 DATA_DIR = PROJECT_DIR / 'data'
 # LOCAL_DATA_DIR = Path(os.environ.get("HAPPYPOSE_DATA_DIR", Path(PROJECT_DIR) / "local_data"))
 if os.environ.get("HAPPYPOSE_DATA_DIR") is None:
-    LOCAL_DATA_DIR = Path("/media/vojta/Data/HappyPose_Data")
+    LOCAL_DATA_DIR = Path("/mnt/Data/HappyPose_Data")
 else:
-    LOCAL_DATA_DIR = Path("HAPPYPOSE_DATA_DIR")
+    LOCAL_DATA_DIR = Path(os.environ.get("HAPPYPOSE_DATA_DIR"))
 
 TEST_DATA_DIR = LOCAL_DATA_DIR
 DASK_LOGS_DIR = LOCAL_DATA_DIR / 'dasklogs'
